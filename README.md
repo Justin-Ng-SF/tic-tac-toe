@@ -1,21 +1,15 @@
-# Lab todo
+UI Mock-up - Refer to UIMOCKUP.PNG
 
-## Opening projects
-- Open this react directory with vs code.
-- Open a terminal in vs code an run `npm i`
-- Run `npm start`
-- Open the spark directory with intelij
-- Start the spark app
+Description - A game of Tic Tac Toe where you can play against random strangers or your friends.		
 
-## Todos
-- Demo making a client request from the FE to the BE using axios
-- Add get parameters to send data to a get endpoint
-- Add post parameters to send more complicated data to the back end
-- Use a dto to send some structured data from server to client
-- Use a stateful variable on the client to display that data
+Breakdown of features - The main features are random matchmaking and playing with your friend, where
+			you will enter a randomly generated code that you send to your friend and the 
+			friend pastes that code in to play against you.
 
 
-## FE 
-- Create a component and import to use it another file
-- Do a conditional render
-- Use a function to calculate what to render
+Team-member tasks
+=================
+John To -
+Carlos Roldan
+Justin Ng
+Neal Patolia
