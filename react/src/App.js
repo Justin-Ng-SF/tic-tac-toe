@@ -8,10 +8,11 @@ function App() {
   const [responseText, setResponseText] = React.useState('');
 
   const handleClick = () => {
-    axios.get(`/api?key=${text}`) // promise
-      .then((res) => {
-        setResponseText(res.data);
-      })
+    console.log("checkpoint");
+    axios.post(`/player`, text) // enter a player tag save it to database
+      .then(
+        console.log("checkpoint2")
+      )
       .catch(console.log);
   };
 
@@ -34,7 +35,7 @@ function App() {
         </p>
         <input value={text} onChange={e => setText(e.target.value)} />
         <hr />
-        <button onClick={handleClick}>Click Me</button>
+        <button onClick={handleClick}>Submit</button>
         <button onClick={testPost}>Test Post</button>
       </header>
     </div>
