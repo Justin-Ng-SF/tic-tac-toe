@@ -13,19 +13,20 @@ public class SparkDemo {
   public static void main(String[] args) {
     port(1234);
 
-    MongoClient mongoClient = new MongoClient("locoalhost", 27017);
+    MongoClient mongoClient = new MongoClient("localhost", 27017);
     MongoDatabase db = mongoClient.getDatabase("MyDatabase");
     MongoCollection<Document> myCollection = db.getCollection("MyCollection");
 
-    //webSocket("/ws", WebSocketHandler.class);
+    webSocket("/ws", WebSocketHandler.class);
+
 
     post("/player", (req, res) -> {
 
-     // Document doc = new Document("PlayerId", req.body());
+      Document doc = new Document("PlayerId", req.body());
 
-   //   myCollection.insertOne(doc);
+     myCollection.insertOne(doc);
 
-      System.out.println("kk");
+      System.out.println("Player: " + req.body());
 
 
 

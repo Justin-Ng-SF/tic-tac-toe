@@ -7,7 +7,8 @@ import java.util.concurrent.*;
 @WebSocket
 public class WebSocketHandler {
     static Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
-    static String clickCountString = "0";
+    static String OnlinePlayers = "0";
+    static int onlineNumber = 0;
     static int[][] board = new int[3][3];
 
     public static void broadcast(String message) {
@@ -20,23 +21,40 @@ public class WebSocketHandler {
         });
     }
 
+
+
+
+
     @OnWebSocketConnect
     public void connected(Session session) throws IOException {
         System.out.println("A client has connected");
         sessionMap.put(session, session);
-        session.getRemote().sendString(clickCountString); // and send it back
+
+
+        System.out.println(sessionMap.size());
+
+        broadcast((((Integer)sessionMap.size()).toString()));
+
+
+
+        //session.getRemote().sendString((((Integer)sessionMap.size()).toString()));// and send it back
+        System.out.println("yes");
+
     }
 
     @OnWebSocketClose
     public void closed(Session session, int statusCode, String reason) {
         System.out.println("A client has disconnected");
         sessionMap.remove(session);
+        System.out.println(sessionMap.size());
+        broadcast((((Integer)sessionMap.size()).toString()));
+
     }
 
     @OnWebSocketMessage
     public void message(Session session, String message) throws IOException {
         System.out.println("Got: " + message);   // Print message
-        clickCountString = message; // save the count
+        OnlinePlayers = message; // save the count
         broadcast(message);
     }
 
