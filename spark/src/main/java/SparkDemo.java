@@ -20,17 +20,19 @@ public class SparkDemo {
     webSocket("/ws", WebSocketHandler.class);
 
 
+
+
     post("/player", (req, res) -> {
 
       Document doc = new Document("PlayerId", req.body());
 
      myCollection.insertOne(doc);
 
-      System.out.println("Player: " + req.body());
+     // System.out.println("Player: " + req.body());
 
 
 
-      return "kk";
+      return "Welcome " + req.body();
 
 
 

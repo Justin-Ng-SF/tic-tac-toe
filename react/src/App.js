@@ -8,29 +8,17 @@ const wsSession = new WebSocket(`ws://localhost:1234/ws`); // fix for multiple c
 function App() {
   const [text, setText] = React.useState(''); // creates state variable, retuns tuple
   const [responseText, setResponseText] = React.useState('');
+  const [responseText2, setResponseText2] = React.useState('');
   
  
   const ws = React.useRef(wsSession);
 
   const handleClick = () => {
-    console.log("checkpoint");
-    axios.post(`/player`, text) // enter a player tag save it to database
-      .then(
-        console.log("checkpoint2")
-
-      )
-      .catch(console.log);
-  };
-
-  const testPost = () => {
- 
-   
-
-    //ws.current.send(responseText + 1);
     
-
-  
+    ws.current.send(text);
   };
+
+ 
 
   ws.current.onopen = () => {
     console.log('Connection open!')
@@ -52,7 +40,7 @@ function App() {
 
   ws.current.onmessage = (message) => {
     setResponseText(message.data);
-   // count = Number(message.data);
+  
      console.log(message.data);
      
    };
@@ -72,11 +60,13 @@ function App() {
         <p>
           
          Online Player: {responseText}
+        
+       
         </p>
         <input value={text} onChange={e => setText(e.target.value)} />
         <hr />
         <button onClick={handleClick}>Submit</button>
-        <button onClick={testPost}>Test Post</button>
+      
       </header>
     </div>
   );

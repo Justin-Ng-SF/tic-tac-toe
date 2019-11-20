@@ -1,5 +1,7 @@
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
+
+import javax.swing.text.Document;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -10,6 +12,7 @@ public class WebSocketHandler {
     static String OnlinePlayers = "0";
     static int onlineNumber = 0;
     static int[][] board = new int[3][3];
+
 
     public static void broadcast(String message) {
         sessionMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
@@ -38,7 +41,7 @@ public class WebSocketHandler {
 
 
         //session.getRemote().sendString((((Integer)sessionMap.size()).toString()));// and send it back
-        System.out.println("yes");
+       // System.out.println("yes");
 
     }
 
@@ -55,8 +58,11 @@ public class WebSocketHandler {
     public void message(Session session, String message) throws IOException {
         System.out.println("Got: " + message);   // Print message
         OnlinePlayers = message; // save the count
-        broadcast(message);
+      //  broadcast(message);
     }
+
+
+
 
 
 }
