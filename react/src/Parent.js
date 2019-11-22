@@ -1,9 +1,8 @@
 import React from "react";
-import LeaveGameButton from "./components/leaveGameButton";
-import NewOpponentButton from "./components/newOpponentButton";
 import WinsBanner from "./components/winsBanner";
 import LossBanner from "./components/lossBanner";
 import Board from "./components/board";
+import Navbar from "./components/navbar";
 class Parent extends React.Component {
   constructor(props) {
     super(props);
@@ -16,8 +15,7 @@ class Parent extends React.Component {
   render() {
     return (
       <div>
-        <LeaveGameButton />
-        <NewOpponentButton />
+        <Navbar />
         <WinsBanner wins={1} />
         <LossBanner lose={0} />
         <Board />
