@@ -31,6 +31,7 @@ function App() {
 
   ws.current.onclose = () =>{
     console.log('Connection close!')
+    setResponseText(" Connection closed")
     
    // ws.current.send(responseText - 1);
 

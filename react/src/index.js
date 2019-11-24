@@ -5,6 +5,8 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import Parent from "./Parent";
 
+//ReactDOM.render(<App />, document.getElementById("root"));  //use for test 
+
 ReactDOM.render(<Parent />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

@@ -1,5 +1,5 @@
 import org.bson.Document;
-import org.eclipse.jetty.server.session.Session;
+import org.eclipse.jetty.websocket.api.Session;
 
 public class PlayerDto {
     public Session client;
