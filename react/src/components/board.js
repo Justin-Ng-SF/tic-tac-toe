@@ -16,19 +16,25 @@ class board extends React.Component {
       return;
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
+    console.log(squares[i]);
+    
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext
     });
+   
   }
 
   renderSquare(i) {
     return (
       <Square
         value={this.state.squares[i]}
+        
         onClick={() => this.handleClick(i)}
       />
+      
     );
+    
   }
 
   render() {
@@ -41,7 +47,7 @@ class board extends React.Component {
     }
 
     return (
-      <div>
+      <div class ="center2">
         <div className="status">{status}</div>
         <div className="board-row">
           {this.renderSquare(0)}

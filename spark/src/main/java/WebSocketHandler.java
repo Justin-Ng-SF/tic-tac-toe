@@ -74,11 +74,13 @@ public class WebSocketHandler {
         myCollection.insertOne(doc);
 
 
-        OnlinePlayers = message; // save the count
+       // OnlinePlayers = message; // save the count
+
+
 
         PlayerDto aPlayer = new PlayerDto(session, doc);// make a player, include it's PlayerId
 
-        gameRoom.matchmakingQueue.add(aPlayer);// Add the player to the gameRoom for matchmaking.
+        obj.addPlayer(aPlayer);// Add the player to the gameRoom for matchmaking.
 
 
       //  broadcast(message);

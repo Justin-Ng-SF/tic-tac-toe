@@ -4,7 +4,7 @@ import NewOpponentButton from "./newOpponentButton";
 class navbar extends React.Component {
   render() {
     return (
-      <nav className="App-header">
+      <nav className="App-header2">
         <LeaveGameButton />
         <NewOpponentButton />
       </nav>
