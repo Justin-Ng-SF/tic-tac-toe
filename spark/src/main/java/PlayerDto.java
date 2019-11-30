@@ -8,6 +8,7 @@ public class PlayerDto {
     public PlayerDto(Session client, Document data){
         this.client = client;
         this.clientData = data;
+
     }
 
 
