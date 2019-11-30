@@ -12,15 +12,17 @@ import java.util.concurrent.*;
 @WebSocket
 public class WebSocketHandler {
     static Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
-    static String OnlinePlayers = "0";
-    static int onlineNumber = 0;
-    static int[][] board = new int[3][3];
 
-    gameRoom obj = new gameRoom();
 
-    MongoClient mongoClient = new MongoClient("localhost", 27017);
-    MongoDatabase db = mongoClient.getDatabase("MyDatabase");
-    MongoCollection<Document> myCollection = db.getCollection("MyCollection");
+    PlayerDto aPlayer;
+    Builder handler = new Builder();
+    ResponseDao toJson = new ResponseDao();
+
+    static gameRoom obj = new gameRoom();
+
+    WebSocketFactory choice = new WebSocketFactory();
+
+
 
 
     public static void broadcast(String message) {
@@ -45,7 +47,23 @@ public class WebSocketHandler {
 
         System.out.println(sessionMap.size());
 
-        broadcast((((Integer)sessionMap.size()).toString()));
+       //handler.setPlayerCount(sessionMap.size());
+
+
+
+       // aPlayer = handler.build();
+
+        //System.out.println(toJson.DAO(aPlayer));
+
+        NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
+
+        toJson.DAO(aMessage);
+
+
+
+        broadcast(toJson.DAO(aMessage));
+
+      // broadcast(toJson.DAO(aPlayer));
 
 
 
@@ -60,7 +78,17 @@ public class WebSocketHandler {
         obj.kickPlayer(session);
         sessionMap.remove(session);
         System.out.println(sessionMap.size());
-        broadcast((((Integer)sessionMap.size()).toString()));
+        NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
+
+        toJson.DAO(aMessage);
+
+
+
+        broadcast(toJson.DAO(aMessage));
+       // handler.setPlayerCount(sessionMap.size());
+     //   aPlayer = handler.build();
+      //  broadcast((((Integer)sessionMap.size()).toString()));
+       // broadcast(toJson.DAO(aPlayer));
 
     }
 
@@ -68,22 +96,37 @@ public class WebSocketHandler {
     public void message(Session session, String message) throws IOException {
         System.out.println("Got: " + message);   // Print message
 
-        Document doc = new Document("PlayerId", message);
+        ResponseDto data = toJson.DAO(message);
+
+        System.out.println(data.userName);
+
+        choice.process(data, session);
+
+
+
+       // Document doc = new Document("PlayerId", message);
         //Maybe later able to retrieve Player data from Mongodb
 
-        myCollection.insertOne(doc);
+
 
 
        // OnlinePlayers = message; // save the count
 
+       // handler.setClient(session);
+      //  handler.setClientData(doc);
+
+      //  aPlayer = handler.build();
 
 
-        PlayerDto aPlayer = new PlayerDto(session, doc);// make a player, include it's PlayerId
-
-        obj.addPlayer(aPlayer);// Add the player to the gameRoom for matchmaking.
 
 
-      //  broadcast(message);
+
+        //aPlayer = PlayerDto(session, doc);// make a player, include it's PlayerId
+
+      //  obj.addPlayer(aPlayer);// Add the player to the gameRoom for matchmaking.
+
+
+       // broadcast(toJson.DAO(aPlayer));
     }
 
 

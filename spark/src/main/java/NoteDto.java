@@ -1,9 +1,9 @@
 public class NoteDto {
-  public final String _id;
-  public final String data;
+  public final String type;
+  public final int playerCount;
 
-  public NoteDto(String _id, String data) {
-    this._id = _id;
-    this.data = data;
+  public NoteDto(String _id, int data) {
+    this.type = _id;
+    this.playerCount = data;
   }
 }

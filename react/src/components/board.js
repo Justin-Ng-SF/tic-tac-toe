@@ -1,6 +1,7 @@
 import React from "react";
 import Square from "./square";
 import calculateWinner from "./calculateWinner";
+
 class board extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +18,8 @@ class board extends React.Component {
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
     console.log(squares[i]);
+    
+    
     
     this.setState({
       squares: squares,

@@ -1,7 +1,9 @@
 import org.bson.Document;
 import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.annotations.*;
 
 public class PlayerDto {
+    int PlayerCount = 1;
     public Session client;
     public Document clientData;
 
@@ -10,6 +12,8 @@ public class PlayerDto {
         this.clientData = data;
 
     }
+
+    public PlayerDto(){}
 
 
 }
