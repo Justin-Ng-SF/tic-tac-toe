@@ -12,6 +12,16 @@ function App() {
   const [responseText, setResponseText] = React.useState('');
   const [responseText2, setResponseText2] = React.useState();
   const game = new Parent();
+
+  var sendData = {
+    type: "Register",
+    userName: null
+  };
+
+  var updateData = {
+    type: "gameRoomUpdate",
+
+  }
   
  
   const ws = React.useRef(wsSession);
@@ -23,8 +33,8 @@ function App() {
     setResponseText2(game.render());
 
     
-    
-    ws.current.send(text);
+    sendData.userName = text;
+    ws.current.send(JSON.stringify(sendData));
 
    /* ws.current.send(JSON.stringify({
       type: 'handshake',
@@ -58,9 +68,18 @@ function App() {
   
 
   ws.current.onmessage = (message) => {
-    setResponseText(message.data);
+    console.log(message.data)
+
+    switch(JSON.parse(message.data).type){
+      case "PlayerCountUpdate":
+          setResponseText(JSON.parse(message.data).playerCount);
+          break;
+
+    }
+   
   
-     console.log(message.data);
+     //console.log(JSON.parse(message.data).PlayerCount);
+    
      
    };
 

@@ -1,23 +1,25 @@
 import org.eclipse.jetty.websocket.api.Session;
 
 
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class gameRoom {
       static Queue<PlayerDto> matchmakingQueue = new LinkedList<>();
+      static Map<Integer, TicTacToe> gamingRoom = new ConcurrentHashMap<>();
+
 
       public void addPlayer(PlayerDto client){
+          int RoomID = 0;
            matchmakingQueue.add(client);
            System.out.println("Number in Matchmaking: " + matchmakingQueue.size());
 
            if(matchmakingQueue.size() >= 2) {
                 PlayerDto aPlayer = matchmakingQueue.poll();
                 PlayerDto aPlayer2 = matchmakingQueue.poll();
-                TicTacToe aRoom = new TicTacToe(aPlayer, aPlayer2);
+                TicTacToe aRoom = new TicTacToe(aPlayer, aPlayer2, RoomID);
+                gamingRoom.put(RoomID, aRoom);
+                RoomID++;
              System.out.println("Matched");
            }
       }

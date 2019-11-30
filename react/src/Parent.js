@@ -14,6 +14,7 @@ class Parent extends React.Component {
   }
 
   updateWins = () => this.setState({ score: this.props.wins + 1 });
+  
 
   render() {
     return (
