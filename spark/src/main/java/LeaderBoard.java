@@ -1,3 +1,4 @@
+import org.bson.Document;
 import java.util.ArrayList;
 
 public class LeaderBoard {
@@ -13,7 +14,7 @@ public class LeaderBoard {
 
     }
 
-    public void addToLeaderBoard(){
+    public void addToLeaderBoard(Document doc){
 
     }
 
