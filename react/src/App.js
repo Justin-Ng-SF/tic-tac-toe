@@ -100,9 +100,19 @@ function App() {
          Online Player: {responseText}
          {responseText2}
          
-        
-       
         </p>
+
+        <img src="top3.png" className="Top3">
+        </img>
+
+        <text class="Top10">
+
+        </text>
+
+        
+
+
+
 
         <div id="test">
         <input value={text} onChange={e => setText(e.target.value)} />
