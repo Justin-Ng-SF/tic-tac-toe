@@ -20,4 +20,10 @@ public class PlayerInfoDto {
     public int getPlayerWins(){
         return playerWins;
     }
+
+    @Override
+    public String toString() {
+        return "player_id: " + player_id + ", playerWins: " + playerWins;
+    }
+
 }
