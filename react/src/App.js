@@ -22,8 +22,7 @@ function App() {
     type: "gameRoomUpdate",
 
   }
-  
- 
+
   const ws = React.useRef(wsSession);
 
   const handleClick = () => {
@@ -39,21 +38,13 @@ function App() {
    /* ws.current.send(JSON.stringify({
       type: 'handshake',
       status: 'success'
-    }));*/
-
-    
-   
+    }));*/   
     
   };
-
- 
 
   ws.current.onopen = () => {
     console.log('Connection open!')
 
-   
-   
-    
    // ws.current.send(responseText + 1);
   };
 
@@ -65,8 +56,6 @@ function App() {
 
   }
 
-  
-
   ws.current.onmessage = (message) => {
     console.log(message.data)
 
@@ -77,17 +66,9 @@ function App() {
 
     }
    
-  
      //console.log(JSON.parse(message.data).PlayerCount);
-    
      
    };
-
-  
- 
-  
-
-  
 
   return (
     <div className="App">
@@ -108,10 +89,6 @@ function App() {
         <text class="Top10">
 
         </text>
-
-        
-
-
 
 
         <div id="test">

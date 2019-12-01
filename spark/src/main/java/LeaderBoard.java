@@ -1,3 +1,7 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -19,7 +23,13 @@ public class LeaderBoard {
     public void addToLeaderBoard(Document document) {
         PlayerInfoDao dao = new PlayerInfoDao();
 
+
+
         PlayerInfoDto playerDto = dao.setPlayerInfoDto(document.get("player_id").toString(), document.getInteger("wins"));
+
+        //test
+        playerDto = dao.setPlayerInfoDto("username", 5);
+
         leaderboard.add(playerDto);
 
         Comparator<PlayerInfoDto> compareByWins = Comparator
@@ -43,8 +53,13 @@ public class LeaderBoard {
 
     }
 
-    public ArrayList<String> getLeaderBoard(){
-        return usernames;
+    public String getLeaderBoard(){
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jsonParser = new JsonParser();
+        JsonObject users = jsonParser.parse(String.valueOf(usernames)).getAsJsonObject();
+
+        return gson.toJson(users);
     }
 
 }
