@@ -42,8 +42,15 @@ function App() {
     
   };
 
-  ws.current.onopen = () => {
+  ws.current.onopen = (message) => {
     console.log('Connection open!')
+
+    
+    switch(JSON.parse(message.data).type){
+      case "Type":
+        //set list here
+        break;
+    }
 
    // ws.current.send(responseText + 1);
   };
@@ -69,6 +76,9 @@ function App() {
      //console.log(JSON.parse(message.data).PlayerCount);
      
    };
+
+
+
 
   return (
     <div className="App">
