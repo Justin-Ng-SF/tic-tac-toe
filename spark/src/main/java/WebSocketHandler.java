@@ -18,6 +18,9 @@ public class WebSocketHandler {
     Builder handler = new Builder();
     ResponseDao toJson = new ResponseDao();
 
+    LeaderBoard leaderboard = new LeaderBoard();
+    PlayerInfoDao infoToJson = new PlayerInfoDao();
+
     static gameRoom obj = new gameRoom();
 
     WebSocketFactory choice = new WebSocketFactory();
@@ -35,21 +38,14 @@ public class WebSocketHandler {
         });
     }
 
-
-
-
-
     @OnWebSocketConnect
     public void connected(Session session) throws IOException {
         System.out.println("A client has connected");
         sessionMap.put(session, session);
 
-
         System.out.println(sessionMap.size());
 
        //handler.setPlayerCount(sessionMap.size());
-
-
 
        // aPlayer = handler.build();
 
@@ -59,13 +55,10 @@ public class WebSocketHandler {
 
         toJson.DAO(aMessage);
 
-
-
+        //broadcast(infoToJson.setToJson(leaderboard.getLeaderBoard()));
         broadcast(toJson.DAO(aMessage));
 
       // broadcast(toJson.DAO(aPlayer));
-
-
 
         //session.getRemote().sendString((((Integer)sessionMap.size()).toString()));// and send it back
        // System.out.println("yes");

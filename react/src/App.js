@@ -61,9 +61,7 @@ function App() {
     
   };
 
- 
-
-  ws.current.onopen = () => {
+  ws.current.onopen = (message) => {
     console.log('Connection open!')
     client.x = ws;
   //  client.game = Array(9).fill("X")
@@ -77,8 +75,6 @@ function App() {
     
 
 
-   
-   
     
   
   };
@@ -91,8 +87,6 @@ function App() {
   
 
   };
-
-  
 
   ws.current.onmessage = (message) => {
     console.log(message.data)
@@ -137,17 +131,12 @@ function App() {
 
     }
    
-  
      //console.log(JSON.parse(message.data).PlayerCount);
-    
      
    };
 
-  
- 
-  
 
-  
+
 
   return (
     <div className="App">
@@ -161,9 +150,15 @@ function App() {
          {responseText3}
          {responseText2}
          
-        
-       
         </p>
+
+        <img src="top3.png" className="Top3">
+        </img>
+
+        <text class="Top10">
+
+        </text>
+
 
         <div id="test">
         <input value={text} onChange={e => setText(e.target.value)} />
