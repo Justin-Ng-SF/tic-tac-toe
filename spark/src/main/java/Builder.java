@@ -20,7 +20,7 @@ public class Builder {
 
     public PlayerDto build(){
         PlayerDto data = new PlayerDto();
-        data.PlayerCount = playerCount;
+       // data.PlayerCount = playerCount;
         data.client      = client;
         data.clientData  = clientData;
         return data;

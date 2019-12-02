@@ -80,7 +80,7 @@ public class WebSocketHandler {
         System.out.println(sessionMap.size());
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
 
-        toJson.DAO(aMessage);
+
 
 
 
@@ -98,7 +98,7 @@ public class WebSocketHandler {
 
         ResponseDto data = toJson.DAO(message);
 
-        System.out.println(data.userName);
+       // System.out.println(data.userName);
 
         choice.process(data, session);
 

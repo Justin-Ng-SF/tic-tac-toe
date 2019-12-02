@@ -7,10 +7,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class gameRoom {
       static Queue<PlayerDto> matchmakingQueue = new LinkedList<>();
       static Map<Integer, TicTacToe> gamingRoom = new ConcurrentHashMap<>();
+      int RoomID = 0;
 
 
       public void addPlayer(PlayerDto client){
-          int RoomID = 0;
+
            matchmakingQueue.add(client);
            System.out.println("Number in Matchmaking: " + matchmakingQueue.size());
 

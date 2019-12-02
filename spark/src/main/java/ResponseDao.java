@@ -1,7 +1,7 @@
 import com.google.gson.*;
 
 public class ResponseDao {
-    public String DAO(NoteDto data){
+    public static String DAO(NoteDto data){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         return gson.toJson(data);

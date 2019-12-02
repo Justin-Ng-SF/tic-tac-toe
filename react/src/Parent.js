@@ -4,14 +4,23 @@ import LossBanner from "./components/lossBanner";
 import Board from "./components/board";
 import Navbar from "./components/navbar";
 
+
+
 class Parent extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       userList: this.props,
       wins: this.props
     };
+    
+   
+   
   }
+
+ 
+
 
   updateWins = () => this.setState({ score: this.props.wins + 1 });
   

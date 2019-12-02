@@ -1,32 +1,85 @@
 import React from "react";
 import Square from "./square";
 import calculateWinner from "./calculateWinner";
+import client from "./clientServer"
 
-class board extends React.Component {
+
+ class board extends React.Component{
+
+  
+  
+
+
+
   constructor(props) {
     super(props);
+
+    
+    
+
     this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: true
+      squares: client.game,
+      xIsNext: true,
+     
     };
+
+  
+
+
+
   }
 
+  
+
+  
+
+  
+  
+
+  
+
   handleClick(i) {
+   
     const squares = this.state.squares.slice();
+
+    
+   
+
+    if(client.myTurn === true){
+      
+    
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
-    console.log(squares[i]);
+
+    squares[i] = client.XO; 
+
+
+    client.thingToSend.gameBoard = squares;
+    client.thingToSend.RoomID    = client.roomId;
+
+    console.log(client.thingToSend.RoomID)
+
+    client.x.current.send(JSON.stringify(client.thingToSend));
+    
+   
+    
     
     
     
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext
+      
     });
-   
+
+    client.myTurn = false;
   }
+  }
+  
+   
+ 
 
   renderSquare(i) {
     return (
@@ -48,6 +101,8 @@ class board extends React.Component {
     } else {
       status = "Next player: " + (this.state.xIsNext ? "X" : "O");
     }
+
+   
 
     return (
       <div class ="center2">
@@ -72,4 +127,8 @@ class board extends React.Component {
   }
 }
 
+
+
+
 export default board;
+

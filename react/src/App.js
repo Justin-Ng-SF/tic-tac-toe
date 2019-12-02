@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import axios from 'axios';
 import './App.css';
 import Parent from './Parent';
+import board from './components/board';
+import client from "./components/clientServer"
 
 
 const wsSession = new WebSocket(`ws://localhost:1234/ws`); // fix for multiple connections
@@ -11,16 +13,34 @@ function App() {
   const [text, setText] = React.useState(''); // creates state variable, retuns tuple
   const [responseText, setResponseText] = React.useState('');
   const [responseText2, setResponseText2] = React.useState();
-  const game = new Parent();
+  const [responseText3, setResponseText3] = React.useState('');
+  var game = new Parent();
+  
+  
+  var gameRoomID = null;
 
   var sendData = {
     type: "Register",
     userName: null
-  };
+  }
 
   var updateData = {
     type: "gameRoomUpdate",
 
+  }
+
+  client.thingToSend  = {
+    type: "gameRoomUpdate",
+    RoomID: 0,
+    gameBoard: null
+
+
+
+};
+
+  var quit ={
+    type: "quitGame",
+    gameRoomId: null
   }
   
  
@@ -30,16 +50,11 @@ function App() {
     var x = document.getElementById("test");
     x.style.display = "none";
 
-    setResponseText2(game.render());
+    setResponseText3("\nMatchmaking");
 
     
     sendData.userName = text;
     ws.current.send(JSON.stringify(sendData));
-
-   /* ws.current.send(JSON.stringify({
-      type: 'handshake',
-      status: 'success'
-    }));*/
 
     
    
@@ -50,20 +65,32 @@ function App() {
 
   ws.current.onopen = () => {
     console.log('Connection open!')
+    client.x = ws;
+  //  client.game = Array(9).fill("X")
+   // setResponseText2(game.render());
+    
+   
+   
+  //  gamebox.state.ws = "ok"
+   // console.log(gamebox.state.ws)
+  //  console.log(gamebox.state.squares[8])
+    
+
 
    
    
     
-   // ws.current.send(responseText + 1);
+  
   };
 
   ws.current.onclose = () =>{
     console.log('Connection close!')
+    
     setResponseText(" Connection closed")
     
-   // ws.current.send(responseText - 1);
+  
 
-  }
+  };
 
   
 
@@ -73,7 +100,40 @@ function App() {
     switch(JSON.parse(message.data).type){
       case "PlayerCountUpdate":
           setResponseText(JSON.parse(message.data).playerCount);
+        
           break;
+
+      case "Matched":
+        console.log(JSON.parse(message.data).roomId)
+
+        client.thingToSend.RoomID = JSON.parse(message.data).roomId;
+
+        client.roomId = JSON.parse(message.data).roomId;
+
+        console.log(client.thingToSend.RoomID)
+
+
+
+
+        client.game = JSON.parse(message.data).board
+      
+      
+        setResponseText2(game.render());
+        
+        setResponseText3("");
+        break;
+
+      case "Turn":
+        client.myTurn = JSON.parse(message.data).turn;
+        client.XO     = JSON.parse(message.data).XO;
+        client.game   = JSON.parse(message.data).board
+        
+        
+      
+        //client.game = JSON.parse(message.data).board;
+        setResponseText2();
+        setResponseText2(game.render());
+        break;
 
     }
    
@@ -98,6 +158,7 @@ function App() {
         <p>
           
          Online Player: {responseText}
+         {responseText3}
          {responseText2}
          
         

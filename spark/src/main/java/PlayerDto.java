@@ -3,9 +3,9 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 public class PlayerDto {
-    int PlayerCount = 1;
     public Session client;
     public Document clientData;
+    public boolean turn = false;
 
     public PlayerDto(Session client, Document data){
         this.client = client;

@@ -21,7 +21,10 @@ public class WebSocketFactory {
                 break;
 
             case "gameRoomUpdate":
-                gameRoom.gamingRoom.get(data.RoomID).test();
+                gameRoom.gamingRoom.get(data.RoomID).setBoard(data.gameBoard);
+               gameRoom.gamingRoom.get(data.RoomID).action();
+                System.out.println(data.RoomID);
+
                 break;
         }
 
