@@ -14,6 +14,7 @@ function App() {
   const [responseText, setResponseText] = React.useState('');
   const [responseText2, setResponseText2] = React.useState();
   const [responseText3, setResponseText3] = React.useState('');
+  const [responseText4, setResponseText4] = React.useState('');
   var game = new Parent();
   
   
@@ -149,8 +150,10 @@ function App() {
          Online Player: {responseText}
          {responseText3}
          {responseText2}
-         
-        </p>
+        
+       
+        </p> 
+       
 
         <img src="top3.png" className="Top3">
         </img>
@@ -158,6 +161,8 @@ function App() {
         <text class="Top10">
 
         </text>
+
+  <body><p>Welcome {text}</p></body>
 
 
         <div id="test">

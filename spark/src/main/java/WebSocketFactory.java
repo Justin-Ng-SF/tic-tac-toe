@@ -2,27 +2,47 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import static com.mongodb.client.model.Filters.*;
+import org.bson.types.ObjectId;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 
-public class WebSocketFactory {
+public class WebSocketFactory {                   //Function to decide what action need to do
     MongoClient mongoClient = new MongoClient("localhost", 27017);
     MongoDatabase db = mongoClient.getDatabase("MyDatabase");
     MongoCollection<Document> myCollection = db.getCollection("MyCollection");
 
     public void process(ResponseDto data, Session client) {
         switch (data.type) {
-            case "Register":
-                Document doc = new Document("_id", data.userName).append("win", 0);
-                myCollection.insertOne(doc);
-                PlayerDto aPlayer = new PlayerDto(client, doc);
-                WebSocketHandler.obj.addPlayer(aPlayer);
+            case "Register": //Save user gametag into mongodb if no gamertag is in mongodb
+                try {
+                    Document doc = new Document("_id", data.userName).append("win", 0);
+                    Document doc2 = myCollection.find(eq("_id", data.userName)).first();
+
+                   if(!data.userName.equals(doc2.get("_id"))) {
+                       System.out.println("New user");
+                       myCollection.insertOne(doc);
+                       PlayerDto aPlayer = new PlayerDto(client, doc);
+                       WebSocketHandler.obj.addPlayer(aPlayer);
+                   } else{ PlayerDto aPlayer = new PlayerDto(client, doc2);
+                       WebSocketHandler.obj.addPlayer(aPlayer);}
+
+
+
+
+                }catch(Exception e){
+                    System.out.println("New user");
+                    Document doc = new Document("_id", data.userName).append("win", 0);
+                    myCollection.insertOne(doc);
+                    PlayerDto aPlayer = new PlayerDto(client, doc);
+                    WebSocketHandler.obj.addPlayer(aPlayer);
+                }
                 break;
 
             case "gameRoomUpdate":
-                gameRoom.gamingRoom.get(data.RoomID).setBoard(data.gameBoard);
-               gameRoom.gamingRoom.get(data.RoomID).action();
+                gameRoom.gamingRoom.get(data.RoomID).setBoard(data.gameBoard); //player tictactoe board save to backend, and then send to all players in the room.
+                gameRoom.gamingRoom.get(data.RoomID).action();  //action use to order front end to act
                 System.out.println(data.RoomID);
 
                 break;

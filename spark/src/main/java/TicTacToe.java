@@ -44,6 +44,9 @@ public class TicTacToe {
         this.player1 = player1;
         this.player2 = player2;
 
+        String name = player1.clientData.getString("_id");
+        System.out.println(name);
+
         NoteDto thingToSend = new NoteDto(ID, "Matched", board);
         this.player1.turn = true;
 
