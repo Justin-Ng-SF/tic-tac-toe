@@ -86,24 +86,22 @@
   color: white;
 }
 
-.Top3{
+.LeaderBoard{
   position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 200px;
-  height: 120px;
-  border: 3px solid green;
+  top: 0vmax;
+  left: 0vmax;
+  width: 30vmax;
+  height: 15vmax;
   font-size: calc(10px + 2vmin);
   color: black;
 }
 
 .Top10{
   position: absolute;
-  top: 123px;
+  top: 15.5vmax;
   left: 0px;
-  width: 200px;
-  height: 120px;
-  border: 3px solid green;
+  width: 30vmax;
+  height: 15vmax;
   font-size: calc(10px + 2vmin);
   color: black;
 }
@@ -118,7 +116,13 @@
   font-size: 24px;
 }
 
-
+pre {
+  color: white;
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+} 
 
 
 

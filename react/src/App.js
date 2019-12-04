@@ -10,11 +10,29 @@ import client from "./components/clientServer"
 const wsSession = new WebSocket(`ws://localhost:1234/ws`); // fix for multiple connections
 
 function App() {
+
   const [text, setText] = React.useState(''); // creates state variable, retuns tuple
   const [responseText, setResponseText] = React.useState('');
   const [responseText2, setResponseText2] = React.useState();
   const [responseText3, setResponseText3] = React.useState('');
   const [responseText4, setResponseText4] = React.useState('');
+
+  const [leaderboard, setLeaderboard] = React.useState('');
+
+  var test = ["user1", "user2", "user3"];
+
+  const set = () =>{
+    var size = test.length;
+    for(let i=0; i< size; i++){
+      test[i] = `\n user: ${test[i]}`
+    }
+    setLeaderboard(test);
+  }
+
+  React.useEffect(() => {
+    set();
+   }, [])
+
   var game = new Parent();
   
   
@@ -142,7 +160,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Tik Tok Toe</h1>
+        <h1>Tik Tac Toe</h1>
        
         <img src="thumbnail.png" className="App-logo" alt="logo" />
         <p>
@@ -154,15 +172,21 @@ function App() {
        
         </p> 
        
+        <div class="LeaderBoard">
+          <img src="top3.png" className="LeaderBoard">
+          </img>
+        </div>
 
-        <img src="top3.png" className="Top3">
-        </img>
 
-        <text class="Top10">
 
-        </text>
+        <div class="Top10">
+          <font color="White">Leaderboard</font>
+          <pre color="White">{leaderboard}</pre>
 
-  <body><p>Welcome {text}</p></body>
+        </div>
+
+
+  <body><p>Welcome{text}</p></body>
 
 
         <div id="test">
