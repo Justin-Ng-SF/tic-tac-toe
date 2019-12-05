@@ -186,7 +186,7 @@ function App() {
         </div>
 
 
-  <body><p>Welcome{text}</p></body>
+  <body><p>Welcome {text}</p></body>
 
 
         <div id="test">
