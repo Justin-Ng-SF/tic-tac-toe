@@ -56,11 +56,12 @@ public class LeaderBoard {
         }
 
         Comparator<UserDto> compareByWins = Comparator
-                .comparing(UserDto::getPlayerUser)
-                .thenComparing(UserDto::getWins);
+                .comparing(UserDto::getWins)
+                .thenComparing(UserDto::getPlayerUser);
 
         List<UserDto> playerList = leaderboard.stream()
-                .sorted(compareByWins)
+                .sorted(compareByWins.reversed())
+                .limit(5)
                 .collect(Collectors.toList());
 
 
