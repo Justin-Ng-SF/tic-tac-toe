@@ -50,7 +50,8 @@ public class LeaderBoard {
 
         Gson gson = new Gson();
         String json = gson.toJson(playerList);
-        leaderboard = json.substring(0, 1) + "{\"type\":\"Leaderboard\"}," + json.substring(1);
+        //leaderboard = json.substring(0, 1) + "{\"type\":\"Leaderboard\"}," + json.substring(1);
+        leaderboard = json;
     }
 
     public String getLeaderBoard(){
