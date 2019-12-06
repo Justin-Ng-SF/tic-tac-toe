@@ -64,9 +64,9 @@ public class LeaderBoard {
                 .limit(5)
                 .collect(Collectors.toList());
 
-
         Gson gson = new Gson();
         String json = gson.toJson(playerList);
+        json = json.substring(0, 1) + "{\"type\":\"leaderboard\"}," + json.substring(1);
         return json;
         //return a.toString();
     }
