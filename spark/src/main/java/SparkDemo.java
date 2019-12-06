@@ -21,9 +21,9 @@ public class SparkDemo {
     db = mongoClient.getDatabase("MyDatabase");
     myCollection = db.getCollection("MyCollection");
 
-/*    //test
+    //test
     LeaderBoard lb = new LeaderBoard(myCollection);
-    System.out.print(lb.getLeaderBoard());*/
+    System.out.print(lb.getLeaderBoard());
 
     webSocket("/ws", WebSocketHandler.class);
 

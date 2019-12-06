@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class NoteDto {
   public final String type;     // let the front end know what type of information reciving
   public Integer playerCount = null; // number of player online
@@ -5,6 +7,13 @@ public class NoteDto {
   public boolean turn = false;
   public String XO = "X";
   public String[] board;
+  public ArrayList<UserDto> leaderboard = null;
+
+
+  public NoteDto(String type, ArrayList<UserDto> leaderboard){
+    this.type = type;
+    this.leaderboard = leaderboard;
+  }
 
 
   public NoteDto(String _id, int data) {  //Update player count

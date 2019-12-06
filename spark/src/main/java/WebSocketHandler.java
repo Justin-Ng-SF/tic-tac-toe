@@ -1,6 +1,7 @@
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
 import org.bson.Document;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
@@ -22,6 +23,14 @@ public class WebSocketHandler {
     static gameRoom obj = new gameRoom();
 
     WebSocketFactory choice = new WebSocketFactory();
+
+
+    MongoClient mongoClient = new MongoClient("localhost", 27017);
+    MongoDatabase db = mongoClient.getDatabase("MyDatabase");
+    MongoCollection<Document> myCollection = db.getCollection("MyCollection");
+
+
+    LeaderBoard lb = new LeaderBoard(myCollection);
 
 
 
@@ -49,9 +58,15 @@ public class WebSocketHandler {
 
         //System.out.println(toJson.DAO(aPlayer));
 
+        System.out.print(lb.getLeaderBoard());
+
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
+        //NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
+
+
 
         toJson.DAO(aMessage);
+        //broadcast(toJson.DAO(leaderBoard));
 
         //broadcast(infoToJson.setToJson(leaderboard.getLeaderBoard()));
         broadcast(toJson.DAO(aMessage));
