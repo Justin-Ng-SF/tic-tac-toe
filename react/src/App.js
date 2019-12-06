@@ -21,7 +21,7 @@ function App() {
 
   var test = ["user1", "user2", "user3"];
 
-  const set = () =>{
+  const toString = () =>{
     var size = test.length;
     for(let i=0; i< size; i++){
       test[i] = `\n user: ${test[i]}`
@@ -30,7 +30,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    set();
+    toString();
    }, [])
 
   var game = new Parent();
@@ -111,6 +111,9 @@ function App() {
     console.log(message.data)
 
     switch(JSON.parse(message.data).type){
+      case "Leaderboard":
+
+
       case "PlayerCountUpdate":
           setResponseText(JSON.parse(message.data).playerCount);
         
@@ -186,7 +189,7 @@ function App() {
         </div>
 
 
-  <body><p>Welcome{text}</p></body>
+  <body><p>Welcome {text}</p></body>
 
 
         <div id="test">

@@ -1,7 +1,6 @@
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -10,56 +9,53 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LeaderBoard {
+
     /*
     array of Documents containing player_id, wins
     */
-    public ArrayList<PlayerInfoDto> leaderboard = new ArrayList<>();
-    public ArrayList<String> usernames = new ArrayList<>();
+    private static SparkDemo sparkdemo;
+    private static MongoCollection<Document> myCollection;
 
-    public LeaderBoard(){
+    public ArrayList<UserDto> userDtoList = new ArrayList<>();
+    public String leaderboard;
 
+    public LeaderBoard(MongoCollection<Document> myCollection){
+        this.myCollection = myCollection;
+        makeLeaderboard();
     }
 
-    public void addToLeaderBoard(Document document) {
-        PlayerInfoDao dao = new PlayerInfoDao();
+    public void makeLeaderboard() {
+        MongoCursor<Document> cursor = myCollection.find().iterator();
+        Document doc;
 
+        try {
+            while (cursor.hasNext()) {
+                doc = cursor.next();
+                UserDto userDto = new UserDto(doc.get("_id").toString(), Integer.valueOf(doc.get("win").toString()));
+                userDtoList.add(userDto);
 
-
-        PlayerInfoDto playerDto = dao.setPlayerInfoDto(document.get("player_id").toString(), document.getInteger("wins"));
-
-        //test
-        playerDto = dao.setPlayerInfoDto("username", 5);
-
-        leaderboard.add(playerDto);
-
-        Comparator<PlayerInfoDto> compareByWins = Comparator
-                .comparing(PlayerInfoDto::getPlayerWins)
-                .thenComparing(PlayerInfoDto::getPlayer_id);
-
-        List<PlayerInfoDto> playerList = leaderboard.stream()
-                .sorted(compareByWins)
-                .collect(Collectors.toList());
-
-
-        leaderboard = null;
-        leaderboard.addAll(playerList);
-
-        usernames = null;
-
-        for(int i=0; i<leaderboard.size(); i++){
-            usernames.add(leaderboard.get(i).player_id);
+            }
+        } finally {
+            cursor.close();
         }
 
+        Comparator<UserDto> compareByWins = Comparator
+                .comparing(UserDto::getWins)
+                .thenComparing(UserDto::getPlayerUser);
 
+        List<UserDto> playerList = userDtoList.stream()
+                .sorted(compareByWins.reversed())
+                .limit(5)
+                .collect(Collectors.toList());
+
+        Gson gson = new Gson();
+        String json = gson.toJson(playerList);
+        //leaderboard = json.substring(0, 1) + "{\"type\":\"Leaderboard\"}," + json.substring(1);
+        leaderboard = json;
     }
 
     public String getLeaderBoard(){
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser jsonParser = new JsonParser();
-        JsonObject users = jsonParser.parse(String.valueOf(usernames)).getAsJsonObject();
-
-        return gson.toJson(users);
+        return leaderboard;
     }
 
 }

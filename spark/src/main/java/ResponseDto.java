@@ -3,9 +3,4 @@ public class ResponseDto {
    String userName;
    int RoomID;
    String[] gameBoard;
-
-
-
-
-
 }

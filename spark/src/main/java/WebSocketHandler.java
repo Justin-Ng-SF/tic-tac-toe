@@ -18,8 +18,6 @@ public class WebSocketHandler {
     Builder handler = new Builder();
     ResponseDao toJson = new ResponseDao();
 
-    LeaderBoard leaderboard = new LeaderBoard();
-    PlayerInfoDao infoToJson = new PlayerInfoDao();
 
     static gameRoom obj = new gameRoom();
 
