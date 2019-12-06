@@ -6,6 +6,7 @@ public class NoteDto {
   public String XO = "X";
   public String[] board;
 
+
   public NoteDto(String _id, int data) {  //Update player count
     this.type = _id;
     this.playerCount = data;
