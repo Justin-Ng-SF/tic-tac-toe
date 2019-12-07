@@ -65,7 +65,7 @@ public class WebSocketHandler {
         //System.out.print(lb.getLeaderBoard());
 
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
-        //NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
+        NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
 
 
 

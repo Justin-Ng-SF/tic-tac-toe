@@ -132,4 +132,3 @@ import client from "./clientServer"
 
 
 export default board;
-

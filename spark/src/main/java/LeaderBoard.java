@@ -17,7 +17,7 @@ public class LeaderBoard {
     private static MongoCollection<Document> myCollection;
 
     public ArrayList<UserDto> userDtoList = new ArrayList<>();
-    public String leaderboard;
+    public ArrayList<UserDto> leaderboard;
 
     public LeaderBoard(MongoCollection<Document> myCollection){
         this.myCollection = myCollection;
@@ -51,11 +51,11 @@ public class LeaderBoard {
         Gson gson = new Gson();
         String json = gson.toJson(playerList);
         //leaderboard = json.substring(0, 1) + "{\"type\":\"Leaderboard\"}," + json.substring(1);
-        leaderboard = json;
+        userDtoList = (ArrayList<UserDto>) playerList;
     }
 
-    public String getLeaderBoard(){
-        return leaderboard;
+    public ArrayList<UserDto> getLeaderBoard(){
+        return userDtoList;
     }
 
 }
