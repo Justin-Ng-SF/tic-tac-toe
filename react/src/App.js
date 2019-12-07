@@ -99,6 +99,11 @@ function App() {
     console.log(message.data)
 
     switch(JSON.parse(message.data).type){
+      case "Leaderboard":
+          console.log("@@@@@@@@@@@@@@@@@@@@@@@@@")
+          set(JSON.parse(message.data).playerCount);
+          console.log(message.data)
+          console.log("@@@@@@@@@@@@@@@@@@@@@@@@@")
       
       case "PlayerCountUpdate":
           setResponseText(JSON.parse(message.data).playerCount);

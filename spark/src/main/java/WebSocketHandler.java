@@ -70,7 +70,7 @@ public class WebSocketHandler {
 
 
         toJson.DAO(aMessage);
-        //broadcast(toJson.DAO(leaderBoard));
+        broadcast(toJson.DAO(leaderBoard));
 
         //broadcast(infoToJson.setToJson(leaderboard.getLeaderBoard()));
         broadcast(toJson.DAO(aMessage));
