@@ -19,14 +19,14 @@ function App() {
 
   const [leaderboard, setLeaderboard] = React.useState('');
 
-  var test = ["user1", "user2", "user3"];
+  var data = ["user1", "user2", "user3"];
 
   const toString = () =>{
-    var size = test.length;
+    var size = data.length;
     for(let i=0; i< size; i++){
-      test[i] = `\n user: ${test[i]}`
+      data[i] = `\n user: ${data[i]}`
     }
-    setLeaderboard(test);
+    setLeaderboard(data);
   }
 
   React.useEffect(() => {
@@ -112,6 +112,8 @@ function App() {
 
     switch(JSON.parse(message.data).type){
       case "Leaderboard":
+          //toString(message.data);
+          setLeaderboard(message.data);
 
 
       case "PlayerCountUpdate":
