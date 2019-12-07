@@ -28,7 +28,7 @@ class Parent extends React.Component {
   render() {
     return (
       <div>
-        <Navbar />
+       
         <WinsBanner wins={0} />
         <LossBanner lose={0} />
         <div class="center">

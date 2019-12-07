@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class gameRoom { //Matchmaking
       static Queue<PlayerDto> matchmakingQueue = new LinkedList<>(); //put player into queue for matchmaking
       static Map<Integer, TicTacToe> gamingRoom = new ConcurrentHashMap<>(); //Key value pair, int is for gameroom id which can use to find the specific room, tictactoe is game room
-      int RoomID = 0;
+      static int RoomID = 0;
 
 
       public void addPlayer(PlayerDto client){  //PlayerDto is player profile, it contains session and doc, Add player into gamingRoom, and give a roomid for the room
@@ -41,6 +41,39 @@ public class gameRoom { //Matchmaking
                     System.out.println("Player has been kicked, Player in gameRoom: " + matchmakingQueue.size() );
                }
           }
+     }
+
+     public void OpponentLeave(Session session){
+          Iterator<TicTacToe> target = gamingRoom.values().iterator();        //check each game room to find the disconnected Player's room
+          while (target.hasNext()){
+              TicTacToe room = target.next();
+              int remainUser = (int)room.sessionMap.keySet().stream().filter(Session::isOpen).count();
+              NoteDto thingToSend = new NoteDto("gameOver", 0);
+              try {
+                  if (remainUser < 2) {
+
+                      if (room.player1.client == session) {
+                          addPlayer(room.player2);
+
+
+                          room.player2.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
+                      } else {
+                          addPlayer(room.player1);
+
+                          room.player1.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
+                      }
+
+                      gamingRoom.remove(room.RoomID);
+                      System.out.println("Room closed, Player sent to matchmaking");
+
+                  }
+
+              }catch (Exception e){
+                  System.out.println(e.toString());
+              }
+
+          }
+
      }
 
 

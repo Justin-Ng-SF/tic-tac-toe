@@ -35,9 +35,12 @@ public class WebSocketHandler {
 
 
 
+
+
     public static void broadcast(String message) {
         sessionMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
             try {
+
                 session.getRemote().sendString(message);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -48,17 +51,18 @@ public class WebSocketHandler {
     @OnWebSocketConnect
     public void connected(Session session) throws IOException {
         System.out.println("A client has connected");
+
         sessionMap.put(session, session);
 
         System.out.println(sessionMap.size());
 
-       //handler.setPlayerCount(sessionMap.size());
+        //handler.setPlayerCount(sessionMap.size());
 
-       // aPlayer = handler.build();
+        // aPlayer = handler.build();
 
         //System.out.println(toJson.DAO(aPlayer));
 
-        System.out.print(lb.getLeaderBoard());
+        //System.out.print(lb.getLeaderBoard());
 
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
         //NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
@@ -71,10 +75,10 @@ public class WebSocketHandler {
         //broadcast(infoToJson.setToJson(leaderboard.getLeaderBoard()));
         broadcast(toJson.DAO(aMessage));
 
-      // broadcast(toJson.DAO(aPlayer));
+        // broadcast(toJson.DAO(aPlayer));
 
         //session.getRemote().sendString((((Integer)sessionMap.size()).toString()));// and send it back
-       // System.out.println("yes");
+        // System.out.println("yes");
 
     }
 
@@ -82,7 +86,9 @@ public class WebSocketHandler {
     public void closed(Session session, int statusCode, String reason) {
         System.out.println("A client has disconnected");
         obj.kickPlayer(session);
+        obj.OpponentLeave(session);
         sessionMap.remove(session);
+
         System.out.println(sessionMap.size());
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
 
@@ -91,10 +97,10 @@ public class WebSocketHandler {
 
 
         broadcast(toJson.DAO(aMessage));
-       // handler.setPlayerCount(sessionMap.size());
-     //   aPlayer = handler.build();
-      //  broadcast((((Integer)sessionMap.size()).toString()));
-       // broadcast(toJson.DAO(aPlayer));
+        // handler.setPlayerCount(sessionMap.size());
+        //   aPlayer = handler.build();
+        //  broadcast((((Integer)sessionMap.size()).toString()));
+        // broadcast(toJson.DAO(aPlayer));
 
     }
 
@@ -104,24 +110,24 @@ public class WebSocketHandler {
 
         ResponseDto data = toJson.DAO(message);
 
-       // System.out.println(data.userName);
+        // System.out.println(data.userName);
 
         choice.process(data, session);
 
 
 
-       // Document doc = new Document("PlayerId", message);
+        // Document doc = new Document("PlayerId", message);
         //Maybe later able to retrieve Player data from Mongodb
 
 
 
 
-       // OnlinePlayers = message; // save the count
+        // OnlinePlayers = message; // save the count
 
-       // handler.setClient(session);
-      //  handler.setClientData(doc);
+        // handler.setClient(session);
+        //  handler.setClientData(doc);
 
-      //  aPlayer = handler.build();
+        //  aPlayer = handler.build();
 
 
 
@@ -129,10 +135,10 @@ public class WebSocketHandler {
 
         //aPlayer = PlayerDto(session, doc);// make a player, include it's PlayerId
 
-      //  obj.addPlayer(aPlayer);// Add the player to the gameRoom for matchmaking.
+        //  obj.addPlayer(aPlayer);// Add the player to the gameRoom for matchmaking.
 
 
-       // broadcast(toJson.DAO(aPlayer));
+        // broadcast(toJson.DAO(aPlayer));
     }
 
 

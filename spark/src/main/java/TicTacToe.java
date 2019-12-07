@@ -11,17 +11,21 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.mongodb.client.model.Filters.eq;
+
 @WebSocket
 public class TicTacToe {
-    private int RoomID;
-    private Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
+    public int RoomID;
+    public Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
     private String[] board = new String[9];
-    private PlayerDto player1;
-    private PlayerDto player2;
+    public PlayerDto player1;
+    public PlayerDto player2;
+    public boolean   winnerDecided = false;
 
     public void broadcast(String message) {
         sessionMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
             try {
+
                 session.getRemote().sendString(message);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -64,13 +68,15 @@ public class TicTacToe {
         try {
 
             if (player1.turn == true) {
+                System.out.println("number in game" + sessionMap.keySet().stream().filter(Session::isOpen).count());
 
-                NoteDto thingToSend = new NoteDto("Turn", true, "X", board);
+                NoteDto thingToSend = new NoteDto("Turn", true, "X", board, player1.clientData.get("_id").toString());
                 player1.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
                 player1.turn = false;
                 player2.turn = true;
             } else {
-                NoteDto thingToSend = new NoteDto("Turn", true, "O", board);
+                System.out.println("number in game" + sessionMap.keySet().stream().filter(Session::isOpen).count());
+                NoteDto thingToSend = new NoteDto("Turn", true, "O", board, player2.clientData.get("_id").toString());
                 player2.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
                 player2.turn = false;
                 player1.turn = true;
@@ -87,6 +93,19 @@ public class TicTacToe {
 
     public void setBoard(String[] data){
         this.board = data;
+    }
+
+    public void winnerDecided(){
+        if(winnerDecided != true) {
+            if (player1.turn == true) {
+                System.out.println("Winner : " + player1.clientData.get("_id"));
+                winnerDecided = true;
+            } else {
+                System.out.println("Winner : " + player1.clientData.get("_id"));
+                winnerDecided = true;
+
+            }
+        }
     }
 
 
