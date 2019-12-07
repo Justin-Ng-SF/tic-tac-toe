@@ -35,9 +35,12 @@ public class WebSocketHandler {
 
 
 
+
+
     public static void broadcast(String message) {
         sessionMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
             try {
+
                 session.getRemote().sendString(message);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -48,6 +51,7 @@ public class WebSocketHandler {
     @OnWebSocketConnect
     public void connected(Session session) throws IOException {
         System.out.println("A client has connected");
+
         sessionMap.put(session, session);
 
         System.out.println(sessionMap.size());
@@ -58,7 +62,7 @@ public class WebSocketHandler {
 
         //System.out.println(toJson.DAO(aPlayer));
 
-        System.out.print(lb.getLeaderBoard());
+        //System.out.print(lb.getLeaderBoard());
 
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
         //NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
@@ -82,7 +86,9 @@ public class WebSocketHandler {
     public void closed(Session session, int statusCode, String reason) {
         System.out.println("A client has disconnected");
         obj.kickPlayer(session);
+        obj.OpponentLeave(session);
         sessionMap.remove(session);
+
         System.out.println(sessionMap.size());
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
 

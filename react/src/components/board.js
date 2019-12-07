@@ -51,7 +51,7 @@ import client from "./clientServer"
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? "X" : "O";
+    //squares[i] = this.state.xIsNext ? "X" : "O";
 
     squares[i] = client.XO; 
 
@@ -75,6 +75,7 @@ import client from "./clientServer"
     });
 
     client.myTurn = false;
+    client.nextPlayer = "Opponent"
   }
   }
   
@@ -99,7 +100,7 @@ import client from "./clientServer"
     if (winner) {
       status = "Winner: " + winner;
     } else {
-      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+      status = "Next player: " + (client.nextPlayer);
     }
 
    

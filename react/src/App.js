@@ -11,17 +11,17 @@ const wsSession = new WebSocket(`ws://localhost:1234/ws`); // fix for multiple c
 
 function App() {
 
-  const [text, setText] = React.useState(''); // creates state variable, retuns tuple
-  const [responseText, setResponseText] = React.useState('');
-  const [responseText2, setResponseText2] = React.useState();
-  const [responseText3, setResponseText3] = React.useState('');
+  const [text, setText] = React.useState(''); // Number of Player
+  const [responseText, setResponseText] = React.useState(''); //Connection status
+  const [responseText2, setResponseText2] = React.useState(); //Render Game Board
+  const [responseText3, setResponseText3] = React.useState('');//Matchmaking status
   const [responseText4, setResponseText4] = React.useState('');
 
   const [leaderboard, setLeaderboard] = React.useState('');
 
   var test = ["user1", "user2", "user3"];
 
-  const toString = () =>{
+  const set = () =>{
     var size = test.length;
     for(let i=0; i< size; i++){
       test[i] = `\n user: ${test[i]}`
@@ -30,7 +30,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    toString();
+    set();
    }, [])
 
   var game = new Parent();
@@ -43,10 +43,7 @@ function App() {
     userName: null
   }
 
-  var updateData = {
-    type: "gameRoomUpdate",
-
-  }
+  
 
   client.thingToSend  = {
     type: "gameRoomUpdate",
@@ -57,9 +54,9 @@ function App() {
 
 };
 
-  var quit ={
-    type: "quitGame",
-    gameRoomId: null
+  client.winner ={
+    type: "winner",
+    RoomID: 0,
   }
   
  
@@ -69,7 +66,7 @@ function App() {
     var x = document.getElementById("test");
     x.style.display = "none";
 
-    setResponseText3("\nMatchmaking");
+    setResponseText3(" "+"Matchmaking");
 
     
     sendData.userName = text;
@@ -80,28 +77,19 @@ function App() {
     
   };
 
-  ws.current.onopen = (message) => {
+  ws.current.onopen = () => {
     console.log('Connection open!')
     client.x = ws;
-  //  client.game = Array(9).fill("X")
-   // setResponseText2(game.render());
-    
-   
-   
-  //  gamebox.state.ws = "ok"
-   // console.log(gamebox.state.ws)
-  //  console.log(gamebox.state.squares[8])
-    
-
-
-    
-  
+ 
   };
 
   ws.current.onclose = () =>{
     console.log('Connection close!')
     
-    setResponseText(" Connection closed")
+    setResponseText(" "+"Connection closed")
+
+    setResponseText2();
+    setResponseText3(" ");
     
   
 
@@ -111,22 +99,26 @@ function App() {
     console.log(message.data)
 
     switch(JSON.parse(message.data).type){
-      case "Leaderboard":
-
-
+      
       case "PlayerCountUpdate":
           setResponseText(JSON.parse(message.data).playerCount);
         
           break;
 
       case "Matched":
+        client.nextPlayer = "Opponent"
         console.log(JSON.parse(message.data).roomId)
 
         client.thingToSend.RoomID = JSON.parse(message.data).roomId;
 
         client.roomId = JSON.parse(message.data).roomId;
 
+        client.winner.RoomID = JSON.parse(message.data).roomId;
+
+
+
         console.log(client.thingToSend.RoomID)
+        console.log("Roomid" + client.winner.RoomID)
 
 
 
@@ -142,18 +134,24 @@ function App() {
       case "Turn":
         client.myTurn = JSON.parse(message.data).turn;
         client.XO     = JSON.parse(message.data).XO;
-        client.game   = JSON.parse(message.data).board
+        client.game   = JSON.parse(message.data).board;
+        client.nextPlayer = JSON.parse(message.data).nextPlayer;
         
         
       
-        //client.game = JSON.parse(message.data).board;
+       
         setResponseText2();
         setResponseText2(game.render());
         break;
 
+      case "gameOver":
+        setResponseText2();
+        setResponseText3(" " + "Opponent left, Matchmaking");
+
+
     }
    
-     //console.log(JSON.parse(message.data).PlayerCount);
+   
      
    };
 

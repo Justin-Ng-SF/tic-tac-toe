@@ -8,6 +8,7 @@ public class NoteDto {
   public String XO = "X";
   public String[] board;
   public ArrayList<UserDto> leaderboard = null;
+  public String nextPlayer = null;
 
 
   public NoteDto(String type, ArrayList<UserDto> leaderboard){
@@ -27,11 +28,12 @@ public class NoteDto {
     this.board = board;
   }
 
-  public NoteDto(String id, boolean turn, String XO, String[] board){
+  public NoteDto(String id, boolean turn, String XO, String[] board, String nextPlayer){
     this.type = id;
     this.turn = turn;
     this.XO   = XO;
     this.board = board;
+    this.nextPlayer = nextPlayer;
   }
 
 

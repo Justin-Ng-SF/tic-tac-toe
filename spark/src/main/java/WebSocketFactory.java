@@ -19,6 +19,7 @@ public class WebSocketFactory {                   //Function to decide what acti
                 try {
                     Document doc = new Document("_id", data.userName).append("win", 0);
                     Document doc2 = myCollection.find(eq("_id", data.userName)).first();
+                    System.out.println(doc.get("_id"));
 
                    if(!data.userName.equals(doc2.get("_id"))) {
                        System.out.println("New user");
@@ -42,10 +43,15 @@ public class WebSocketFactory {                   //Function to decide what acti
 
             case "gameRoomUpdate":
                 gameRoom.gamingRoom.get(data.RoomID).setBoard(data.gameBoard); //player tictactoe board save to backend, and then send to all players in the room.
-                gameRoom.gamingRoom.get(data.RoomID).action();  //action use to order front end to act
+                if( gameRoom.gamingRoom.get(data.RoomID).winnerDecided != true) {
+                    gameRoom.gamingRoom.get(data.RoomID).action();
+                }//action use to order front end to act
                 System.out.println(data.RoomID);
 
                 break;
+
+            case "winner":
+                gameRoom.gamingRoom.get(data.RoomID).winnerDecided();
         }
 
 
