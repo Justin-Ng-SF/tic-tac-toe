@@ -19,7 +19,6 @@ function App() {
 
   const [leaderboard, setLeaderboard] = React.useState('');
 
-  var test = ["user1", "user2", "user3"];
 
   const set = (list, size) =>{
     //var size = test.length;
@@ -27,7 +26,7 @@ function App() {
     for(let i=0; i< size; i++){
       var user = list[i]["username"];
       var wins = list[i]["wins"];
-      entry[i] = `\n Player: ${user} has ${wins} wins!`
+      entry[i] = `\n ${i+1}. ${user} has ${wins} wins!`
 
     }
     setLeaderboard(entry);
@@ -104,10 +103,7 @@ function App() {
 
     switch(JSON.parse(message.data).type){
       case "Leaderboard":
-          console.log("@@@@@@@@@@@@@@@@@@@@@@@@@")
           set(JSON.parse(message.data).leaderboard, JSON.parse(message.data).leaderboard.length);
-          console.log(JSON.parse(message.data).leaderboard[1]["username"])
-          console.log("@@@@@@@@@@@@@@@@@@@@@@@@@")
       
       case "PlayerCountUpdate":
           setResponseText(JSON.parse(message.data).playerCount);
@@ -170,7 +166,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Tik Tac Toe</h1>
+        <h1>Tic Tac Toe</h1>
        
         <img src="thumbnail.png" className="App-logo" alt="logo" />
         <p>
@@ -190,7 +186,7 @@ function App() {
 
 
         <div class="Top10">
-          <font color="White">Top 5 Leaderboard</font>
+          <font color="White" size="1vh">Top 5 Leaderboard</font>
           <pre color="White">{leaderboard}</pre>
 
         </div>
