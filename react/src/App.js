@@ -21,12 +21,16 @@ function App() {
 
   var test = ["user1", "user2", "user3"];
 
-  const set = () =>{
-    var size = test.length;
+  const set = (list, size) =>{
+    //var size = test.length;
+    var entry = new Array(size);
     for(let i=0; i< size; i++){
-      test[i] = `\n user: ${test[i]}`
+      var user = list[i]["username"];
+      var wins = list[i]["wins"];
+      entry[i] = `\n Player: ${user} has ${wins} wins!`
+
     }
-    setLeaderboard(test);
+    setLeaderboard(entry);
   }
 
   React.useEffect(() => {
@@ -101,8 +105,8 @@ function App() {
     switch(JSON.parse(message.data).type){
       case "Leaderboard":
           console.log("@@@@@@@@@@@@@@@@@@@@@@@@@")
-          set(JSON.parse(message.data).playerCount);
-          console.log(message.data)
+          set(JSON.parse(message.data).leaderboard, JSON.parse(message.data).leaderboard.length);
+          console.log(JSON.parse(message.data).leaderboard[1]["username"])
           console.log("@@@@@@@@@@@@@@@@@@@@@@@@@")
       
       case "PlayerCountUpdate":
@@ -186,7 +190,7 @@ function App() {
 
 
         <div class="Top10">
-          <font color="White">Leaderboard</font>
+          <font color="White">Top 5 Leaderboard</font>
           <pre color="White">{leaderboard}</pre>
 
         </div>
