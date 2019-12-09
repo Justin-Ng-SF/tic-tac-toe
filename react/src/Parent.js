@@ -31,7 +31,7 @@ class Parent extends React.Component {
        
         <WinsBanner wins={0} />
         <LossBanner lose={0} />
-        <div class="center">
+        <div>
         <Board />
         </div>
       </div>

@@ -17,7 +17,7 @@ public class WebSocketHandler {
 
     PlayerDto aPlayer;
     Builder handler = new Builder();
-    ResponseDao toJson = new ResponseDao();
+    static ResponseDao toJson = new ResponseDao();
 
 
     static gameRoom obj = new gameRoom();
@@ -25,12 +25,12 @@ public class WebSocketHandler {
     WebSocketFactory choice = new WebSocketFactory();
 
 
-    MongoClient mongoClient = new MongoClient("localhost", 27017);
-    MongoDatabase db = mongoClient.getDatabase("MyDatabase");
-    MongoCollection<Document> myCollection = db.getCollection("MyCollection");
+    static MongoClient mongoClient = new MongoClient("localhost", 27017);
+    static MongoDatabase db = mongoClient.getDatabase("MyDatabase");
+    static MongoCollection<Document> myCollection = db.getCollection("MyCollection");
 
 
-    LeaderBoard lb = new LeaderBoard(myCollection);
+
 
 
 
@@ -64,12 +64,14 @@ public class WebSocketHandler {
 
         //System.out.print(lb.getLeaderBoard());
 
+        LeaderBoard lb = new LeaderBoard(myCollection);
+
         NoteDto aMessage = new NoteDto("PlayerCountUpdate", sessionMap.size());
         NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
 
 
 
-        toJson.DAO(aMessage);
+
         broadcast(toJson.DAO(leaderBoard));
 
         //broadcast(infoToJson.setToJson(leaderboard.getLeaderBoard()));

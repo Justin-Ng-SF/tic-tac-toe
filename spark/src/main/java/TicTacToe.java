@@ -3,6 +3,7 @@
 //a constructor to take two player
 //
 
+import org.bson.Document;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
@@ -20,7 +21,8 @@ public class TicTacToe {
     private String[] board = new String[9];
     public PlayerDto player1;
     public PlayerDto player2;
-    public boolean   winnerDecided = false;
+    public boolean   winnerDecided;
+    private int round = 9;
 
     public void broadcast(String message) {
         sessionMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
@@ -45,6 +47,7 @@ public class TicTacToe {
         sessionMap.put(player1.client, player1.client);
         sessionMap.put(player2.client, player2.client);
         RoomID = ID;
+        winnerDecided = false;
         this.player1 = player1;
         this.player2 = player2;
 
@@ -65,7 +68,14 @@ public class TicTacToe {
     }
 
     public void action() {
+        System.out.println("GameRoom number " + RoomID + " round number " + round);
         try {
+            if(round == 0){
+                NoteDto thingToSend = new NoteDto("roundEnd", 0);
+                player1.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
+                player2.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
+
+            }
 
             if (player1.turn == true) {
                 System.out.println("number in game" + sessionMap.keySet().stream().filter(Session::isOpen).count());
@@ -74,12 +84,14 @@ public class TicTacToe {
                 player1.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
                 player1.turn = false;
                 player2.turn = true;
+                round--;
             } else {
                 System.out.println("number in game" + sessionMap.keySet().stream().filter(Session::isOpen).count());
                 NoteDto thingToSend = new NoteDto("Turn", true, "O", board, player2.clientData.get("_id").toString());
                 player2.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
                 player2.turn = false;
                 player1.turn = true;
+                round--;
 
 
             }
@@ -96,17 +108,34 @@ public class TicTacToe {
     }
 
     public void winnerDecided(){
-        if(winnerDecided != true) {
+
+
             if (player1.turn == true) {
                 System.out.println("Winner : " + player1.clientData.get("_id"));
-                winnerDecided = true;
+                player1.clientData = WebSocketHandler.myCollection.find(player1.clientData).first();
+                int numberOfWin = Integer.valueOf(player1.clientData.get("win").toString());
+                numberOfWin++;
+                System.out.println("number  a of win :" + numberOfWin);
+                WebSocketHandler.myCollection.updateOne(player1.clientData, new Document("$set", new Document("win", numberOfWin)));
+                player1.clientData = WebSocketHandler.myCollection.find(player1.clientData).first();
+               // System.out.println("Number a of win :" + player1.clientData.get("win"));
+
+
             } else {
-                System.out.println("Winner : " + player1.clientData.get("_id"));
-                winnerDecided = true;
+                System.out.println("Winner : " + player2.clientData.get("_id"));
+                player2.clientData = WebSocketHandler.myCollection.find(player2.clientData).first();
+                int numberOfWin = Integer.valueOf(player2.clientData.get("win").toString());
+                numberOfWin++;
+                System.out.println("number of win :" + numberOfWin);
+                WebSocketHandler.myCollection.updateOne(player2.clientData, new Document("$set", new Document("win", numberOfWin)));
+                player2.clientData = WebSocketHandler.myCollection.find(player2.clientData).first();
+               // System.out.println("Number of win :" + player2.clientData.get("win"));
+
 
             }
         }
     }
 
 
-}
+
+

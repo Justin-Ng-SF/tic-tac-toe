@@ -23,7 +23,7 @@ public class SparkDemo {
 
     //test
     LeaderBoard lb = new LeaderBoard(myCollection);
-    System.out.print(lb.getLeaderBoard());
+   // System.out.print(lb.getLeaderBoard());
 
     webSocket("/ws", WebSocketHandler.class);
 

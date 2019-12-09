@@ -13,12 +13,17 @@ function calculateWinner(squares) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c] ) {
       client.winner.RoomID = client.roomId;
 
+
       console.log("Room id:" + client.winner.RoomID)
+      
+
       client.x.current.send(JSON.stringify(client.winner));
       return squares[a];
+    } else if(client.roundCount == 0){
+      console.log("Draw!!")
     }
   }
   return null;

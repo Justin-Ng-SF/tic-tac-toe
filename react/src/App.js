@@ -29,6 +29,7 @@ function App() {
       entry[i] = `\n ${i+1}. ${user} has ${wins} wins!`
 
     }
+    setLeaderboard('');
     setLeaderboard(entry);
   }
 
@@ -52,6 +53,15 @@ function App() {
     type: "gameRoomUpdate",
     RoomID: 0,
     gameBoard: null
+
+
+
+};
+
+client.thingToSend2  = {
+  type: "Draw",
+  RoomID: 0,
+  
 
 
 
@@ -83,7 +93,7 @@ function App() {
   ws.current.onopen = () => {
     console.log('Connection open!')
     client.x = ws;
- 
+    
   };
 
   ws.current.onclose = () =>{
@@ -104,13 +114,16 @@ function App() {
     switch(JSON.parse(message.data).type){
       case "Leaderboard":
           set(JSON.parse(message.data).leaderboard, JSON.parse(message.data).leaderboard.length);
+          
+
+         
       
-      case "PlayerCountUpdate":
+      case "PlayerCountUpdate": //Update when user enter 
           setResponseText(JSON.parse(message.data).playerCount);
         
           break;
 
-      case "Matched":
+      case "Matched":  //When match a pair of player
         client.nextPlayer = "Opponent"
         console.log(JSON.parse(message.data).roomId)
 
@@ -119,6 +132,8 @@ function App() {
         client.roomId = JSON.parse(message.data).roomId;
 
         client.winner.RoomID = JSON.parse(message.data).roomId;
+
+        client.roundCount = 9;
 
 
 
@@ -136,11 +151,14 @@ function App() {
         setResponseText3("");
         break;
 
-      case "Turn":
+      case "Turn":  // Each turn update game board
         client.myTurn = JSON.parse(message.data).turn;
         client.XO     = JSON.parse(message.data).XO;
         client.game   = JSON.parse(message.data).board;
         client.nextPlayer = JSON.parse(message.data).nextPlayer;
+
+        console.log(client.roundCount);
+        
         
         
       
@@ -149,9 +167,14 @@ function App() {
         setResponseText2(game.render());
         break;
 
-      case "gameOver":
+      case "gameOver":  // When opponent left
         setResponseText2();
         setResponseText3(" " + "Opponent left, Matchmaking");
+        break;
+
+      case "roundEnd":
+      client.roundCount =  JSON.parse(message.data).playerCount;
+      break;
 
 
     }
@@ -169,30 +192,43 @@ function App() {
         <h1>Tic Tac Toe</h1>
        
         <img src="thumbnail.png" className="App-logo" alt="logo" />
-        <p>
-          
-         Online Player: {responseText}
-         {responseText3}
-         {responseText2}
         
        
-        </p> 
+
        
+      
         <div class="LeaderBoard">
           <img src="top3.png" className="LeaderBoard">
           </img>
         </div>
 
 
-
-        <div class="Top10">
+        
+        <div class="Top10 test2">
           <font color="White" size="1vh">Top 5 Leaderboard</font>
           <pre color="White">{leaderboard}</pre>
 
         </div>
 
+      
+
+
+
+ 
+ <p>
+  
+  Online Player: {responseText}
+  {responseText3}
+  {responseText2}
+ 
+
+ </p> 
 
   <body><p>Welcome {text}</p></body>
+
+  
+
+        
 
 
         <div id="test">
@@ -200,6 +236,8 @@ function App() {
         
         <button onClick={handleClick}>Submit</button>
         </div>
+
+
       
       </header>
     </div>

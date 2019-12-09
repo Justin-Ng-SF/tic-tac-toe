@@ -42,6 +42,9 @@ import client from "./clientServer"
    
     const squares = this.state.squares.slice();
 
+   
+
+
     
    
 
@@ -58,7 +61,7 @@ import client from "./clientServer"
 
     client.thingToSend.gameBoard = squares;
     client.thingToSend.RoomID    = client.roomId;
-
+    
     console.log(client.thingToSend.RoomID)
 
     client.x.current.send(JSON.stringify(client.thingToSend));
@@ -106,7 +109,7 @@ import client from "./clientServer"
    
 
     return (
-      <div class ="center2">
+      <div class ="test2">
         <div className="status">{status}</div>
         <div className="board-row">
           {this.renderSquare(0)}
@@ -132,3 +135,4 @@ import client from "./clientServer"
 
 
 export default board;
+
