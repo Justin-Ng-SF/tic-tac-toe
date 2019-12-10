@@ -26,8 +26,8 @@ public class WebSocketHandler {
 
 
     static MongoClient mongoClient = new MongoClient("localhost", 27017);
-    static MongoDatabase db = mongoClient.getDatabase("MyDatabase");
-    static MongoCollection<Document> myCollection = db.getCollection("MyCollection");
+    MongoDatabase db = mongoClient.getDatabase("MyDatabase");
+    MongoCollection<Document> myCollection = db.getCollection("MyCollection");
 
 
 

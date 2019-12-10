@@ -1,10 +1,12 @@
 import React from "react";
+import client from "./clientServer"
+
 class lossBanner extends React.Component {
   render() {
     // const wins = () => {
     //   "1";
     // };
-    return <h5>{"Losses: " + this.props.lose}</h5>;
+    return <h5>{"User2: " + client.player2}</h5>;
   }
 }
 

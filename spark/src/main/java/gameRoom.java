@@ -34,9 +34,10 @@ public class gameRoom { //Matchmaking
 
           Iterator<PlayerDto> target = matchmakingQueue.iterator();
           while (target.hasNext()){
-               if(target.next().client == client){
+              PlayerDto player = target.next();
+               if(player.client == client){
 
-                    target.remove();
+                   target.remove();
 
                     System.out.println("Player has been kicked, Player in gameRoom: " + matchmakingQueue.size() );
                }
@@ -74,7 +75,41 @@ public class gameRoom { //Matchmaking
 
           }
 
+
+
      }
+
+
+    public void closeGame(int roomID){
+        PlayerDto player1 = gamingRoom.get(roomID).player1;
+        PlayerDto player2 = gamingRoom.get(roomID).player2;
+        gamingRoom.remove(roomID);
+
+        NoteDto thingToSend = new NoteDto("gameOver", 0);
+
+        try {
+            player1.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
+            player2.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+
+
+       addPlayer(player1);
+        addPlayer(player2);
+
+        System.out.println("Size " + matchmakingQueue.size());
+
+
+
+        System.out.println("Room removed " + roomID);
+
+
+
+
+
+
+    }
 
 
 

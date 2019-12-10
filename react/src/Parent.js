@@ -3,6 +3,9 @@ import WinsBanner from "./components/winsBanner";
 import LossBanner from "./components/lossBanner";
 import Board from "./components/board";
 import Navbar from "./components/navbar";
+import client from "./components/clientServer"
+
+
 
 
 
@@ -29,8 +32,8 @@ class Parent extends React.Component {
     return (
       <div>
        
-        <WinsBanner wins={0} />
-        <LossBanner lose={0} />
+        <WinsBanner  />
+        <LossBanner  />
         <div>
         <Board />
         </div>

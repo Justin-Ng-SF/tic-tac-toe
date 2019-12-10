@@ -5,6 +5,7 @@ import './App.css';
 import Parent from './Parent';
 import board from './components/board';
 import client from "./components/clientServer"
+import newOpponentButton from './components/newOpponentButton';
 
 
 const wsSession = new WebSocket(`ws://localhost:1234/ws`); // fix for multiple connections
@@ -15,7 +16,7 @@ function App() {
   const [responseText, setResponseText] = React.useState(''); //Connection status
   const [responseText2, setResponseText2] = React.useState(); //Render Game Board
   const [responseText3, setResponseText3] = React.useState('');//Matchmaking status
-  const [responseText4, setResponseText4] = React.useState('');
+  const [responseText4, setResponseText4] = React.useState('');//New oppenent buttom
 
   const [leaderboard, setLeaderboard] = React.useState('');
 
@@ -38,6 +39,7 @@ function App() {
    }, [])
 
   var game = new Parent();
+  const newPlayer = new newOpponentButton();
   
   
   var gameRoomID = null;
@@ -54,18 +56,20 @@ function App() {
     RoomID: 0,
     gameBoard: null
 
-
-
 };
 
 client.thingToSend2  = {
   type: "Draw",
   RoomID: 0,
-  
-
-
 
 };
+
+client.thingToSend3 = {
+  type: "newGame",
+  RoomID: 0,
+
+}
+
 
   client.winner ={
     type: "winner",
@@ -90,6 +94,17 @@ client.thingToSend2  = {
     
   };
 
+  const newGame = () => {
+  //  var y = document.getElementById("test2");
+  //  y.style.display = "none";
+
+    client.thingToSend3.RoomID    = client.roomId;
+
+    client.x.current.send(JSON.stringify(client.thingToSend3));
+
+
+  };
+
   ws.current.onopen = () => {
     console.log('Connection open!')
     client.x = ws;
@@ -107,6 +122,8 @@ client.thingToSend2  = {
   
 
   };
+
+
 
   ws.current.onmessage = (message) => {
     console.log(message.data)
@@ -133,20 +150,22 @@ client.thingToSend2  = {
 
         client.winner.RoomID = JSON.parse(message.data).roomId;
 
+        client.player1 = JSON.parse(message.data).player1;
+
+        client.player2 = JSON.parse(message.data).player2;
+
         client.roundCount = 9;
-
-
 
         console.log(client.thingToSend.RoomID)
         console.log("Roomid" + client.winner.RoomID)
 
-
-
-
-        client.game = JSON.parse(message.data).board
+        client.game = JSON.parse(message.data).board      
       
-      
+        setResponseText2('');
+
         setResponseText2(game.render());
+
+       // setResponseText4(newPlayer.render());
         
         setResponseText3("");
         break;
@@ -163,8 +182,10 @@ client.thingToSend2  = {
         
       
        
-        setResponseText2();
+        setResponseText2('');
         setResponseText2(game.render());
+
+        
         break;
 
       case "gameOver":  // When opponent left
@@ -213,12 +234,13 @@ client.thingToSend2  = {
       
 
 
-
+<h2>Online Player: {responseText}</h2>
  
  <p>
   
-  Online Player: {responseText}
+  
   {responseText3}
+  
   {responseText2}
  
 
@@ -235,7 +257,15 @@ client.thingToSend2  = {
         <input value={text} onChange={e => setText(e.target.value)} />
         
         <button onClick={handleClick}>Submit</button>
+
+       
         </div>
+
+        <div >
+        <button className="button" onClick={newGame}>
+        new opponent
+      </button>
+      </div>
 
 
       

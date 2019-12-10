@@ -9,8 +9,8 @@ import org.eclipse.jetty.websocket.api.annotations.*;
 
 
 public class WebSocketFactory {                   //Function to decide what action need to do
-    MongoClient mongoClient = new MongoClient("localhost", 27017);
-    MongoDatabase db = mongoClient.getDatabase("MyDatabase");
+
+    MongoDatabase db = WebSocketHandler.mongoClient.getDatabase("MyDatabase");
     MongoCollection<Document> myCollection = db.getCollection("MyCollection");
 
     public void process(ResponseDto data, Session client) {
@@ -54,10 +54,20 @@ public class WebSocketFactory {                   //Function to decide what acti
                 if (gameRoom.gamingRoom.get(data.RoomID).winnerDecided == false){
                     gameRoom.gamingRoom.get(data.RoomID).winnerDecided = true;
                 gameRoom.gamingRoom.get(data.RoomID).winnerDecided();
-                    LeaderBoard lb = new LeaderBoard(myCollection);
-                    NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
-                   WebSocketHandler.broadcast(WebSocketHandler.toJson.DAO(leaderBoard));
+                    //LeaderBoard lb = new LeaderBoard(myCollection);
+                  //  NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
+             //      WebSocketHandler.broadcast(WebSocketHandler.toJson.DAO(leaderBoard));
         }
+
+                break;
+
+            case "newGame":
+                WebSocketHandler.obj.closeGame(data.RoomID);
+                break;
+
+
+
+
 
 
         }

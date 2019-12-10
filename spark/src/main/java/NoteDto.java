@@ -9,6 +9,8 @@ public class NoteDto {
   public String[] board;
   public ArrayList<UserDto> leaderboard = null;
   public String nextPlayer = null;
+  public String player1 = null;
+  public String player2 = null;
 
 
   public NoteDto(String type, ArrayList<UserDto> leaderboard){
@@ -22,10 +24,12 @@ public class NoteDto {
     this.playerCount = data;
   }
 
-  public NoteDto(int data, String _id, String[] board) {  //Initial new game
+  public NoteDto(int data, String _id, String[] board, String player1, String player2) {  //Initial new game
     this.type = _id;
     this.roomId = data;
     this.board = board;
+    this.player1 = player1;
+    this.player2 = player2;
   }
 
   public NoteDto(String id, boolean turn, String XO, String[] board, String nextPlayer){
