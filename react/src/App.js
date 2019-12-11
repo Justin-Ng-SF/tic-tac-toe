@@ -131,12 +131,13 @@ client.thingToSend3 = {
     switch(JSON.parse(message.data).type){
       case "Leaderboard":
           set(JSON.parse(message.data).leaderboard, JSON.parse(message.data).leaderboard.length);
-          
+         break;
 
          
       
       case "PlayerCountUpdate": //Update when user enter 
           setResponseText(JSON.parse(message.data).playerCount);
+         // client.playerCount = JSON.parse(message.data).playerCount;
         
           break;
 
@@ -165,7 +166,7 @@ client.thingToSend3 = {
 
         setResponseText2(game.render());
 
-       // setResponseText4(newPlayer.render());
+        setResponseText4("");
         
         setResponseText3("");
         break;
@@ -191,11 +192,21 @@ client.thingToSend3 = {
       case "gameOver":  // When opponent left
         setResponseText2();
         setResponseText3(" " + "Opponent left, Matchmaking");
+        setResponseText4("");
         break;
 
       case "roundEnd":
       client.roundCount =  JSON.parse(message.data).playerCount;
+      setResponseText4(newPlayer.render());
+      
+
       break;
+
+      case "draw":
+          client.roundCount =  JSON.parse(message.data).playerCount;
+          setResponseText2('');
+          setResponseText2(game.render());
+          setResponseText4(newPlayer.render());
 
 
     }
@@ -235,16 +246,26 @@ client.thingToSend3 = {
 
 
 <h2>Online Player: {responseText}</h2>
+
+<div id="test">
+        <input value={text} onChange={e => setText(e.target.value)} />
+        
+        <button onClick={handleClick}>Submit</button>
+
+       
+        </div>
+
+
  
  <p>
-  
+ {responseText2}
   
   {responseText3}
-  
-  {responseText2}
  
 
  </p> 
+
+ <h3> {responseText4}</h3>
 
   <body><p>Welcome {text}</p></body>
 
@@ -253,19 +274,9 @@ client.thingToSend3 = {
         
 
 
-        <div id="test">
-        <input value={text} onChange={e => setText(e.target.value)} />
-        
-        <button onClick={handleClick}>Submit</button>
+      
 
        
-        </div>
-
-        <div >
-        <button className="button" onClick={newGame}>
-        new opponent
-      </button>
-      </div>
 
 
       

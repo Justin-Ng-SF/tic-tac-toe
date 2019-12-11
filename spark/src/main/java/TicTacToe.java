@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.mongodb.client.model.Filters.eq;
 
-@WebSocket
+
 public class TicTacToe {
     public int RoomID;
     public Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
@@ -72,7 +72,7 @@ public class TicTacToe {
         System.out.println("GameRoom number " + RoomID + " round number " + round);
         try {
             if (round == 0) {
-                NoteDto thingToSend = new NoteDto("roundEnd", 0);
+                NoteDto thingToSend = new NoteDto("draw", 0);
                 player1.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
                 player2.client.getRemote().sendString(ResponseDao.DAO(thingToSend));
 
@@ -124,6 +124,10 @@ public class TicTacToe {
                 Document up = new Document("$set", new Document("win", numberOfWin));
 
                 myCollection.updateOne(player1.clientData, up);
+
+                NoteDto thingToSend = new NoteDto("roundEnd", 0);
+                broadcast(ResponseDao.DAO(thingToSend));
+
 
                 //player1.clientData = myCollection.find(player1.clientData).first();
                 //player1.clientData = WebSocketHandler.myCollection.find(player1.clientData).first();

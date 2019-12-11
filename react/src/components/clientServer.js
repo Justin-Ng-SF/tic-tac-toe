@@ -9,6 +9,7 @@ var Player2 = null;
 
 var game = null
 //board[2] = "X"
+//var playerCount = null;
 
 var thingToSend = null;
 

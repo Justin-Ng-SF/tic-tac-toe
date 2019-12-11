@@ -15,8 +15,7 @@ public class WebSocketHandler {
     static Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
 
 
-    PlayerDto aPlayer;
-    Builder handler = new Builder();
+
     static ResponseDao toJson = new ResponseDao();
 
 
@@ -73,14 +72,9 @@ public class WebSocketHandler {
 
 
         broadcast(toJson.DAO(leaderBoard));
-
-        //broadcast(infoToJson.setToJson(leaderboard.getLeaderBoard()));
         broadcast(toJson.DAO(aMessage));
 
-        // broadcast(toJson.DAO(aPlayer));
 
-        //session.getRemote().sendString((((Integer)sessionMap.size()).toString()));// and send it back
-        // System.out.println("yes");
 
     }
 
@@ -99,10 +93,7 @@ public class WebSocketHandler {
 
 
         broadcast(toJson.DAO(aMessage));
-        // handler.setPlayerCount(sessionMap.size());
-        //   aPlayer = handler.build();
-        //  broadcast((((Integer)sessionMap.size()).toString()));
-        // broadcast(toJson.DAO(aPlayer));
+
 
     }
 
@@ -112,35 +103,12 @@ public class WebSocketHandler {
 
         ResponseDto data = toJson.DAO(message);
 
-        // System.out.println(data.userName);
+
 
         choice.process(data, session);
 
 
 
-        // Document doc = new Document("PlayerId", message);
-        //Maybe later able to retrieve Player data from Mongodb
-
-
-
-
-        // OnlinePlayers = message; // save the count
-
-        // handler.setClient(session);
-        //  handler.setClientData(doc);
-
-        //  aPlayer = handler.build();
-
-
-
-
-
-        //aPlayer = PlayerDto(session, doc);// make a player, include it's PlayerId
-
-        //  obj.addPlayer(aPlayer);// Add the player to the gameRoom for matchmaking.
-
-
-        // broadcast(toJson.DAO(aPlayer));
     }
 
 

@@ -54,9 +54,9 @@ public class WebSocketFactory {                   //Function to decide what acti
                 if (gameRoom.gamingRoom.get(data.RoomID).winnerDecided == false){
                     gameRoom.gamingRoom.get(data.RoomID).winnerDecided = true;
                 gameRoom.gamingRoom.get(data.RoomID).winnerDecided();
-                    //LeaderBoard lb = new LeaderBoard(myCollection);
-                  //  NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
-             //      WebSocketHandler.broadcast(WebSocketHandler.toJson.DAO(leaderBoard));
+                    LeaderBoard lb = new LeaderBoard(myCollection);
+                   NoteDto leaderBoard = new NoteDto("Leaderboard", lb.getLeaderBoard());
+                 WebSocketHandler.broadcast(WebSocketHandler.toJson.DAO(leaderBoard));
         }
 
                 break;

@@ -25,6 +25,7 @@ function calculateWinner(squares) {
       return squares[a];
     } else if(client.roundCount === 0){
       console.log("Draw!!")
+      return "Draw"
     }
   }
   return null;
