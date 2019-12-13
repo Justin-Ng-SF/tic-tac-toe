@@ -21,8 +21,6 @@
   color: #09d3ac;
 }
 
-
-
 .button {
   display: flex;
   align-items: center;
@@ -31,7 +29,7 @@
 .center {
   margin: auto;
   width: 60%;
-  border: 3px solid #73AD21;
+  border: 3px solid #73ad21;
   padding: 10px;
 }
 
@@ -39,7 +37,7 @@
   margin: auto;
 }
 
-.square {
+/* .square {
   background: rgb(240, 236, 236);
   border: 1px solid #999;
   
@@ -53,8 +51,22 @@
   text-align: center;
   width: 34px;
   overflow: visible;
+} */
+.square {
+  background-color: #80ffe5;
+  border-radius: 9px;
+  color: #fff;
+  height: 90px;
+  margin: 3px;
+  width: 90px;
+  transition: background-color 0.3s;
+  font-size: 45px;
+  text-align: center;
 }
-
+.board-row {
+  display: flex;
+  justify-content: center;
+}
 .square:focus {
   outline: none;
 }
@@ -64,7 +76,6 @@
   content: "";
   display: table;
 }
-
 
 /*
 .App {
@@ -87,7 +98,7 @@
   color: white;
 }
 
-.LeaderBoard{
+.LeaderBoard {
   position: absolute;
   top: 0vmax;
   left: 0vmax;
@@ -97,21 +108,21 @@
   color: black;
 }
 
-.test2{
+.test2 {
   border: 2px solid;
-  padding: 20px; 
+  padding: 20px;
   width: 300px;
   resize: both;
   overflow: visible;
-
+  border-color: #09d3ac;
 }
 
-.Top10{
+.Top10 {
   position: absolute;
   top: 15.5vmax;
   left: 0px;
   width: 30vmax;
-  height: 15vmax;
+  height: auto;
   font-size: 4vmin;
   color: black;
 }
@@ -120,8 +131,8 @@
   color: #09d3ac;
 }
 
-.clicker{
-  width:200px;
+.clicker {
+  width: 200px;
   height: 200px;
   font-size: 24px;
 }
@@ -132,34 +143,8 @@ pre {
   font-family: monospace;
   white-space: pre;
   margin: 1em 0;
-} 
-
-.box{
-  margin: auto;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.box {
+  margin: auto;
+}
