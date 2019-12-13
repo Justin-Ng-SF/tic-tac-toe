@@ -16,6 +16,7 @@ public class SparkDemo {
 
   public static void main(String[] args) {
     port(1234);
+      staticFiles.externalLocation(System.getProperty("user.dir") + "/front-end");
 
     mongoClient = new MongoClient("localhost", 27017);
     db = mongoClient.getDatabase("MyDatabase");
