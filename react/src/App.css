@@ -114,6 +114,7 @@
   width: 300px;
   resize: both;
   overflow: visible;
+  border-color: #09d3ac;
 }
 
 .Top10 {
@@ -121,7 +122,7 @@
   top: 15.5vmax;
   left: 0px;
   width: 30vmax;
-  height: 15vmax;
+  height: auto;
   font-size: 4vmin;
   color: black;
 }
